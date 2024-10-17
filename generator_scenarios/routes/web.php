@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ExportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [ExportController::class, 'exportToWord']);
+Route::get('/input', [ExportController::class, 'inputScenarios']);
+Route::post('/save', [ExportController::class, 'saveScenarios']);
