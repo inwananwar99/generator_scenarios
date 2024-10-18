@@ -14,6 +14,6 @@ use App\Http\Controllers\ExportController;
 |
 */
 
-Route::get('/', [ExportController::class, 'exportToWord']);
-Route::get('/input', [ExportController::class, 'inputScenarios']);
+Route::get('/', [ExportController::class, 'inputScenarios']);
+Route::get('/export', [ExportController::class, 'exportToWord']);
 Route::post('/save', [ExportController::class, 'saveScenarios']);
