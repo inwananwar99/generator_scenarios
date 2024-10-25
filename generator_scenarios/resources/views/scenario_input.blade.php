@@ -11,17 +11,22 @@
         <div class="card mt-4">
             <div class="card-body">
                 <div class="row">
-                    <div class="row">
-                        <div class="col-md-10">
+                    <div class="row mb-4">
+                        <form action="/save" method="POST">
+                        @csrf
+                        <div class="col">
                             <h3>Create Test Scenario</h3>
                         </div>
-                        <div class="col-md-2">
-                            <a href="/export" class="btn btn-success">Export to Word</a>
+                        <div class="col">
+                            <select name="project_name" id="" class="form-control">
+                                <option>Pilih Project</option>
+                                <option>Dashboard PLN</option>
+                                <option>Pegadaian</option>
+                                <option>HCIS</option>
+                            </select>
                         </div>
                     </div>
-                    @csrf
                     <div class="col">
-                        <form action="/save" method="POST">
                             <label for="scenario_description">Scenario Description:</label><br>
                             <input type="text" id="scenario_description" class="form-control" name="scenario_description"><br>
                     
@@ -54,14 +59,41 @@
         <div class="card mt-4">
             <div class="card-body">
                 <div class="row">
+                    <h6>Export Skenario UAT</h6>
                     <div class="col">
-                        <button class="btn btn-warning">Skenario 1</button>
+                        @foreach($project_name as $p)
+                        <!-- Button trigger modal -->
+                        <a href="{{ route('export', ['project'=> $p->project_name]) }}" class="btn btn-primary">{{$p->project_name}}</a>
+                        <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        {{$p->project_name}}
+                        </button> -->
+		            @endforeach
                     </div>
                 </div>
                 This is some text within a card body.
             </div>
         </div>
     </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

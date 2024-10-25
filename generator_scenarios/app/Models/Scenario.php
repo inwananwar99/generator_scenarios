@@ -11,6 +11,7 @@ class Scenario extends Model
     protected $primaryKey = 'id';
     protected $fillable = [        
     'scenario_desc', 
+    'project_name', 
     'process_id', 
     'process_name', 
     'expected_result', 
@@ -21,6 +22,7 @@ class Scenario extends Model
 ];
     protected $allowedFields = [
         'scenario_desc', 
+        'project_name', 
         'process_id', 
         'process_name', 
         'expected_result', 

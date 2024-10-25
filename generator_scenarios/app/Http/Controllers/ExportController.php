@@ -9,11 +9,10 @@ use App\Models\Scenario;
 
 class ExportController extends Controller
 {
-    public function exportToWord()
+    public function exportToWord($project)
     {
         // Fetch data from MySQL (e.g., users table)
-        $scenarios = Scenario::all();
-
+        $scenarios = Scenario::where('project_name',$project)->get(); 
         // Create a new PHPWord Object
         $phpWord = new PhpWord();
         $section = $phpWord->addSection();
@@ -25,6 +24,7 @@ class ExportController extends Controller
             'borderColor' => '000000',  // Border color (hex value)
             'cellMargin' => 50     // Cell margin inside the table cells
         ];
+
         // Add table header
         $table = $section->addTable($tableStyle);
         $table->addRow();
@@ -62,7 +62,8 @@ class ExportController extends Controller
     }
 
     public function inputScenarios(){
-        return view('scenario_input');
+        $project_name = Scenario::groupBy('project_name')->get('project_name');
+        return view('scenario_input',['project_name'=> $project_name]);
     }
 
     public function saveScenarios(Request $request){
@@ -79,6 +80,7 @@ class ExportController extends Controller
     //     'status' => 'nullable|string'
     // ]);
         $validated = ([
+        'project_name' => $request->get('project_name'),
         'scenario_desc' => $request->get('scenario_description'),
         'process_id' => $request->get('process_id'),
         'process_name' => $request->get('process_name'),
@@ -95,8 +97,9 @@ class ExportController extends Controller
         }else{
             echo 'Gagal';
         }
+    }
 
-        // return redirect('/input')->with('success', 'Scenario added successfully!');
-
+    public function getProjectName(){
+        $scenarios = Scenario::groupBy('project_name')->get('project_name');
     }
 }
